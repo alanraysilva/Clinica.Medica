@@ -1,0 +1,46 @@
+﻿@model Clinica.Medica.Application.DTOs.TriagemDto
+@using Clinica.Medica.Application.DTOs;
+@{
+    ViewData["Title"] = "Triagem de Pacientes";
+}
+
+<div class="text-center mb-4">
+    <h2 class="fw-bold">Triagem de Pacientes</h2>
+    <p class="text-muted">Registre os dados de triagem e direcione para especialidade</p>
+</div>
+
+<div class="card p-4 mb-3 shadow-sm">
+    <h5><i class="bi bi-person text-primary"></i> Buscar Paciente</h5>
+    <div class="row g-2 align-items-center mt-2">
+        <div class="col-md-8">
+            <input type="number" id="numeroAtendimento" class="form-control" placeholder="Digite o número de atendimento" />
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary w-100" onclick="buscarPaciente()">Buscar</button>
+        </div>
+    </div>
+    <div id="resultadoBusca" class="mt-3"></div>
+</div>
+
+@section Scripts {
+    <script>
+        function buscarPaciente() {
+            const numero = document.getElementById("numeroAtendimento").value;
+            const container = document.getElementById("resultadoBusca");
+
+            if (!numero) return alert("Digite o número de atendimento!");
+
+            fetch(`/Triagem/Buscar?numero=${numero}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Paciente não encontrado");
+                    return res.text();
+                })
+                .then(html => {
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    container.innerHTML = "<div class='alert alert-danger'>Paciente não encontrado.</div>";
+                });
+        }
+    </script>
+}

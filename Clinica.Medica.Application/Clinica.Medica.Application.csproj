@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Clinica.Medica.Domain\Clinica.Medica.Domain.csproj" />
+		<ProjectReference Include="..\Clinica.Medica.Infrastructure\Clinica.Medica.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,58 @@
+﻿@model Clinica.Medica.Application.DTOs.TriagemAtendimentoDto
+@using Clinica.Medica.Application.DTOs;
+
+@{
+    var especialidades = ViewBag.Especialidades as List<EspecialidadeDto>;
+}
+
+<div class="alert alert-success">
+    <div><strong>Paciente Encontrado:</strong></div>
+    <div class="row mt-2">
+        <div class="col-sm-6">Nome: @Model.Nome</div>
+        <div class="col-sm-6">Sexo: @Model.Sexo</div>
+        <div class="col-sm-6">Idade: @Model.Idade anos</div>
+        <div class="col-sm-6">Telefone: @Model.Telefone</div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5><i class="bi bi-journal-medical text-success"></i> Dados de Triagem</h5>
+        <form asp-action="Iniciar" method="post">
+            <input type="hidden" name="AtendimentoId" value="@Model.AtendimentoId" />
+            <div class="mb-3">
+                <label>Sintomas e Queixas *</label>
+                <textarea name="Sintomas" class="form-control" required></textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Pressão Arterial *</label>
+                    <input name="PressaoArterial" class="form-control" placeholder="120/80" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Peso (kg) *</label>
+                    <input name="Peso" class="form-control" type="number" step="0.1" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Altura (cm) *</label>
+                    <input name="Altura" class="form-control" type="number" step="1" required />
+                </div>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" name="Prioritario" class="form-check-input" id="chkPrioritario" />
+                <label class="form-check-label" for="chkPrioritario">Atendimento Prioritário</label>
+            </div>
+            <div class="mb-3">
+                <label>Especialidade Recomendada *</label>
+                <select name="EspecialidadeId" class="form-select" required>
+                    <option value="">Selecione</option>
+                    @foreach (var item in especialidades ?? new List<EspecialidadeDto>())
+                    {
+                        <option value="@item.Id">@item.Nome</option>
+                    }
+                </select>
+            </div>
+            <button class="btn btn-primary w-100">Finalizar Triagem</button>
+        </form>
+    </div>
+</div>

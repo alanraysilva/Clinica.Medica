@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Clinica.Medica</title>
+
+    <!-- Bootstrap e Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+    <!-- Toastr CSS via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">
+                <i class="bi bi-heart text-primary"></i> MediQueue
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active bg-primary bg-opacity-10 rounded px-3" : "")" href="/">
+                            <i class="bi bi-heart"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Paciente" ? "active bg-primary bg-opacity-10 rounded px-3" : "")" href="/Paciente/Criar">
+                            <i class="bi bi-person"></i> Cadastro
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Triagem" ? "active bg-primary bg-opacity-10 rounded px-3" : "")" href="/Triagem/Iniciar">
+                            <i class="bi bi-clipboard2-pulse"></i> Triagem
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Fila" ? "active bg-primary bg-opacity-10 rounded px-3" : "")" href="/Fila">
+                            <i class="bi bi-clock-history"></i> Fila
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        @{
+            var notificationMessage = TempData["NotificationMessage"] as string;
+            var notificationType = TempData["NotificationType"] as string;
+        }
+        @RenderBody()
+    </main>
+
+    <!-- JQuery, Bootstrap JS e Toastr JS via CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Script de notificação embutido -->
+    <script>
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            timeOut: 5000,
+            positionClass: "toast-top-right"
+        };
+
+        const notificationMessage = '@(notificationMessage ?? "")';
+        const notificationType = '@(notificationType ?? "")';
+
+        if (notificationMessage.trim() !== "") {
+            switch (notificationType.toLowerCase()) {
+                case "success": toastr.success(notificationMessage, "Sucesso"); break;
+                case "error": toastr.error(notificationMessage, "Erro"); break;
+                case "warning": toastr.warning(notificationMessage, "Atenção"); break;
+                default: toastr.info(notificationMessage, "Informação"); break;
+            }
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var atividades = ViewBag.AtividadesRecentes as List<Clinica.Medica.Application.DTOs.AtividadeDto>;
+}
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Sistema de Gestão Hospitalar </h2>
+        <p class="text-muted">Dashboard - Visão Geral</p>
+    </div>
+
+    <div class="row mb-4 text-center">
+        <div class="col-md-3">
+            <div class="card border-primary shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Pacientes</h5>
+                    <h3 class="text-primary">@ViewBag.TotalPacientes</h3>
+                    <small class="text-muted">Cadastrados hoje</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-warning shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Fila de Espera</h5>
+                    <h3 class="text-warning">@ViewBag.Fila</h3>
+                    <small class="text-muted">Aguardando atendimento</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-success shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Em Atendimento</h5>
+                    <h3 class="text-success">@ViewBag.EmAtendimento</h3>
+                    <small class="text-muted">Sendo atendidos</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-purple shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Atendidos Hoje</h5>
+                    <h3 class="text-purple">@ViewBag.AtendidosHoje</h3>
+                    <small class="text-muted">Total do dia</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <strong><i class="bi bi-activity text-primary"></i> Atividade Recente</strong>
+            <span class="text-muted small">Últimas atividades do sistema hospitalar</span>
+        </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var item in atividades ?? new())
+            {
+                var icone = item.Tipo switch
+                {
+                    "triagem" => "bi-person-bounding-box text-primary",
+                    "cadastro" => "bi-person-circle text-success",
+                    "especialidade" => "bi-heart-pulse text-purple",
+                    _ => "bi-info-circle text-muted"
+                };
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><i class="bi @icone me-2"></i> @item.Texto</span>
+                    <span class="text-muted small">@item.DataHora.ToString("HH:mm")</span>
+                </li>
+            }
+        </ul>
+    </div>
+
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <a href="/Paciente/Criar" class="btn btn-outline-primary w-100 py-3">
+                <div class="fs-3">👤</div>
+                <div>Cadastrar Paciente</div>
+                <small class="text-muted">Adicionar novo paciente ao sistema</small>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/Triagem/Iniciar" class="btn btn-outline-success w-100 py-3">
+                <div class="fs-3">✅</div>
+                <div>Iniciar Triagem</div>
+                <small class="text-muted">Registrar triagem de paciente</small>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/Fila" class="btn btn-outline-purple w-100 py-3">
+                <div class="fs-3">🕒</div>
+                <div>Ver Fila</div>
+                <small class="text-muted">Acompanhar fila de atendimento</small>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-purple { color: #6f42c1; }
+    .border-purple { border-color: #6f42c1 !important; }
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover {
+        background-color: #6f42c1;
+        color: white;
+    }
+</style>
