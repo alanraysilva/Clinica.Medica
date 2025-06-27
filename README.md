@@ -103,16 +103,4 @@ VALUES ('Cardiologia'), ('Ortopedia'), ('Pediatria');
 
 ---
 
-## 🙌 Contribuições
-
-Pull requests são bem-vindos! Sinta-se à vontade para sugerir melhorias ou reportar bugs via [Issues](https://github.com/seu-usuario/Clinica.Medica/issues).
-
----
-
-## 🧾 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
----
-
 Feito com ❤️ e C# para facilitar o atendimento clínico.
